@@ -8,7 +8,7 @@ const { Schema, model } = mongoose;
 const todoSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'userModel'
+        ref: 'users'
     },
     title: {
         type: String,
