@@ -31,7 +31,6 @@ const login = async (req, res) => {
     }
 };
 
-
 const userProfile = async (req, res) => {
     try {
         let id = req.headers.id;
