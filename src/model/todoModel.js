@@ -24,7 +24,7 @@ const todoSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Completed', 'In Progress'],
+        enum: ['Pending', 'Completed', 'Progress'],
         default: 'Pending'
     }
 }, { timestamps: true, versionKey: false });
