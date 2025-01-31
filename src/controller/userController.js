@@ -34,9 +34,9 @@ const login = async (req, res) => {
 
 const userProfile = async (req, res) => {
     try {
-        let email = req.headers.email;
+        let id = req.headers.id;
         const filter = {
-            email: email
+            _id: id
         };
         const user = await userModel.findOne(filter);
         if (!user) return errorResponse(res, 404, "User not found", null);
@@ -46,5 +46,25 @@ const userProfile = async (req, res) => {
     }
 };
 
+const updateUserProfile = async (req, res) => {
+    try {
+        let id = req.headers.id;
+        const filter = {
+            _id: id
+        };
+        const name = req.body.name;
+        const email = req.body.email;
+        const updateData = {
+            name: name,
+            email: email
+        };
+        const user = await userModel.findOneAndUpdate(filter, updateData, { new: true });
+        if (!user) return errorResponse(res, 404, "User not found", null);
+        return successResponse(res, 200, "User profile updated successfully", user);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+};
 
-module.exports = { registration, login,userProfile };
+
+module.exports = { registration, login,userProfile,updateUserProfile };
