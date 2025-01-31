@@ -108,7 +108,7 @@ const taskStatusUpdate = async (req, res) => {
     } catch (error) {
         return errorResponse(res, 500, "Something went wrong", error);
     }
-}
+};
 
 const deleteTask = async (req, res) => {
     try {
