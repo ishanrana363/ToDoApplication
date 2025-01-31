@@ -1,7 +1,7 @@
 const express = require('express');
 const { registration, login, userProfile, updateUserProfile } = require('../controller/userController');
 const authMiddleware = require('../middleware/authMiddleware');
-const { createTask } = require('../controller/taskController');
+const { createTask, taskByUser } = require('../controller/taskController');
 
 const router = express.Router();
 
@@ -13,7 +13,8 @@ router.put("/update-profile", authMiddleware, updateUserProfile );
 
 // task related api
 
-router.post("/tasks", authMiddleware, createTask )
+router.post("/tasks", authMiddleware, createTask );
+router.get("/task-by-user", authMiddleware, taskByUser );
 
 
 module.exports = router;
