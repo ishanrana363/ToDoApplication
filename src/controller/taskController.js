@@ -75,6 +75,27 @@ const updateTask = async (req, res) => {
     }
 };
 
+const taskStatusUpdate = async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const id = req.headers.id;
+        const filter = {
+            _id: taskId,
+            userId: id,
+        };
+        const updateData = {
+            status: req.body.status,
+        };
+        const updatedTask = await todoModel.findOneAndUpdate(filter, updateData, { new: true });
+        if (!updatedTask) {
+            return errorResponse(res, 404, "Task not found", null);
+        }
+        return successResponse(res, 200, "Task status updated successfully", updatedTask);
+    } catch (error) {
+        return errorResponse(res, 500, "Something went wrong", error);
+    }
+}
+
 const deleteTask = async (req, res) => {
     try {
         const id = req.headers.id;
@@ -95,4 +116,4 @@ const deleteTask = async (req, res) => {
 
 
 
-module.exports = { createTask, taskByUser, updateTask, deleteTask,getTaskById };
+module.exports = { createTask, taskByUser, updateTask, deleteTask, getTaskById, taskStatusUpdate };
