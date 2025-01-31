@@ -19,4 +19,6 @@ const userSchema = new Schema({
     }
 },{timestamps:true,versionKey:false});
 
-const User = model('users', userSchema);
+const userModel = model('users', userSchema);
+
+module.exports = userModel;

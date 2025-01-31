@@ -1,7 +1,7 @@
 const express = require("express")
 const rateLimit = require("express-rate-limit")
 const xss = require('xss-clean')
-const helmet = require("helmet") 
+const helmet = require("helmet")
 const hpp = require('hpp');
 const cors = require("cors")
 const mongoSanitize = require('express-mongo-sanitize');
@@ -50,25 +50,24 @@ app.set('trust proxy', '192.168.0.1'); // Trust specific IP
 app.set('trust proxy', 1); // Trust the first proxy
 // Database Connect 
 
-app.get("/",(req, res) => {
+app.get("/", (req, res) => {
 	res.send("server run successfully");
 });
 
 
 const dbPort = process.env.DB_URL
 
-mongoose.connect(dbPort).then((res)=>{
+mongoose.connect(dbPort).then((res) => {
 	console.log(`--Database connect--`)
-}).catch((error)=>{
+}).catch((error) => {
 	console.log(`--Database connection failed-- ${error}`)
 });
 
 
 // api file import
 
-// const routes = require("./src/routes/api")
-
-// app.use("/api/v1",routes)
+const routes = require("./src/route/api")
+app.use("/api/v1", routes)
 
 
 
