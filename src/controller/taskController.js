@@ -1,5 +1,6 @@
 const { successResponse, errorResponse } = require("../helper/response");
 const todoModel = require("../model/todoModel");
+const userModel = require("../model/userModel");
 
 const createTask = async (req, res) => {
     try {
@@ -14,6 +15,19 @@ const createTask = async (req, res) => {
         return successResponse(res, 201, "Task created successfully", savedTask);
     } catch (error) {
         return errorResponse(res, 500, error.message || "Something went wrong", error);
+    }
+};
+
+const allTask = async (req, res) => {
+    try {
+        let task = await todoModel.find().populate("userId","name").sort({ createdAt: -1 });
+        if (task.length === 0) {
+            return errorResponse(res, 404, 'No tasks found', null);
+        }
+        return successResponse(res, 200, "Tasks retrieved successfully", task);
+    } catch (error) {
+        console.log(error)
+        return errorResponse(res, 500, "Something went wrong", error);
     }
 };
 
@@ -116,4 +130,4 @@ const deleteTask = async (req, res) => {
 
 
 
-module.exports = { createTask, taskByUser, updateTask, deleteTask, getTaskById, taskStatusUpdate };
+module.exports = { createTask, taskByUser, updateTask, deleteTask, getTaskById, taskStatusUpdate, allTask };
