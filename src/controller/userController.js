@@ -35,11 +35,16 @@ const login = async (req, res) => {
 const userProfile = async (req, res) => {
     try {
         let email = req.headers.email;
-        cosnt 
+        const filter = {
+            email: email
+        };
+        const user = await userModel.findOne(filter);
+        if (!user) return errorResponse(res, 404, "User not found", null);
+        return successResponse(res, 200, "User profile fetched successfully", user);
     } catch (error) {
-        
+        return errorResponse(res, 500, "Something went wrong", error);
     }
 };
 
 
-module.exports = { registration, login };
+module.exports = { registration, login,userProfile };

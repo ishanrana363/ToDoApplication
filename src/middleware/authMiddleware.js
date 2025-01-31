@@ -3,8 +3,8 @@ const { errorResponse } = require("../helper/response");
 const key = process.env.SECRET_KEY;
 
 module.exports = (req, res, next) => {
-    let token = req.headers["token"];
-    const decodeToken = jwt.verify(token, key);
+    let token = req.headers.authorization;
+    const decodeToken = jwt.decode(token, key);
     if (decodeToken === null) {
         return errorResponse(res, 401, "Unauthorized user", null);
     } else {
