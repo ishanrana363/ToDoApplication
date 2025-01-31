@@ -53,8 +53,26 @@ const updateTask = async (req, res) => {
         }
         return successResponse(res, 200, "Task updated successfully", updatedTask);
     } catch (error) {
-        return errorResponse(res,500,"Something went wrong", error);
+        return errorResponse(res, 500, "Something went wrong", error);
     }
 };
 
-module.exports = { createTask, taskByUser,updateTask };
+const deleteTask = async (req, res) => {
+    try {
+        const id = req.headers.id;
+        const taskId = req.params.id;
+        const filter = {
+            _id: taskId,
+            userId: id,
+        };
+        const deletedTask = await todoModel.findByIdAndDelete(filter);
+        if (!deletedTask) {
+            return errorResponse(res, 404, "Task not found", null);
+        }
+        return successResponse(res, 200, "Task deleted successfully", deletedTask);
+    } catch (error) {
+
+    }
+};
+
+module.exports = { createTask, taskByUser, updateTask, deleteTask };
